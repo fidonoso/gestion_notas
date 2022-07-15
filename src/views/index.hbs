@@ -1,0 +1,21 @@
+
+
+    <div class="row container my-3">
+        <div class="col-12 col-md-4 mx-auto mx-auto">
+            <div class="my-2" style="height: 40px;">{{>error}}</div>
+            <div class="fs-2 my-2 pt-5">Ingresar</div>
+            <form class="my-3" method="post" action="/validar">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Correo</label>
+                    <input type="email" class="form-control" id="email" name="correo">
+                
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+            
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
