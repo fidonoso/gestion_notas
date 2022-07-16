@@ -12,6 +12,9 @@ import cookieParser from 'cookie-parser'
 import passport from 'passport';
 require('./config/passport.js')
 import indexRoutes from './routes/index.routes.js'
+import RoutesSupervisor from './routes/supervisor.routes.js'
+import RoutesDocente from './routes/docente.routes.js'
+import RoutesAlumno from './routes/alumno.routes.js'
 import main from './database/start_bd.js' //para iniciar la base de datos
 main()
 import {sequelize} from "./database/conexion.js";
@@ -67,27 +70,7 @@ const store = new SequelizeStore({
 
 
 
-// const MYSQLStore= require('express-mysql-session')(session)
-// import MYSQLStore from 'express-mysql-session'
-// const options={
-//     host: config.MYSQL_HOST,
-//     port: config.MYSQL_PORT,
-//     user: config.MYSQL_USER,
-//     password: config.MYSQL_PASSWORD,
-//     database: config.MYSQL_DATABASE,
-//     schema: {
-// 		tableName: 'sessions',
-// 		columnNames: {
-// 			session_id: 'session_id',
-// 			expires: 'expires',
-// 			data: 'data'
-// 		}
-// 	}
-// };
 
-// console.log(options)
-// const sessionStore= new MYSQLStore(options,  pool.promise())
-// console.log('config=>',config)
 
 app.use(session({
   key: 'prueba3',
@@ -104,8 +87,10 @@ app.use(flash());
 
 //variables globales
 app.use((req, res, next)=>{
-  res.locals.message=req.flash('message')
-  res.locals.error=req.flash('error')
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.user = req.user || null;
   res.locals.user = req.user || req.flash("user");
   
   next();
@@ -117,6 +102,9 @@ app.use(express.static(__dirname + '/public'));
 
 //routes
 app.use(indexRoutes)
+app.use(RoutesSupervisor)
+app.use(RoutesDocente)
+app.use(RoutesAlumno)
 
 //restringido
 app.use((req, res)=>{

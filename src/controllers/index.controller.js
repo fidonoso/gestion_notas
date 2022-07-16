@@ -34,7 +34,7 @@ try {
     let id_rol= parseInt(req.body.id_rol);
     const newUser= await Usuario.create(req.body)
    
-    console.log(newUser)
+
     req.flash('message', 'Usuario registrado con éxito')
     res.json({message: "usuario registrado con éxito"})
 } catch (error) {
@@ -47,22 +47,7 @@ export const userlogout = (req, res) => {
     req.session.destroy();
     res.redirect("/login");
   };
-// export const validar=async(req, res) =>{
-//     const {correo, password}= req.body;
-//     const promisePool = pool.promise();
-//     const [rows,fields]=await promisePool.query(`SELECT correo, password FROM usuario WHERE correo='${correo}';`)
-//     if(rows.length==0){
-//         req.flash("error", "el usuario no existe")
-//         return res.redirect('/')
-//     };
-//     let match = await matchPassword(password, rows[0].password);
-//     if(!match){
-//         req.flash('error', 'Contraseña incorrecta')
-//         return res.redirect('/')
-//     }
-//     req.flash("message", "Usuario validado")
-//     res.redirect('/perfil')
-// };
+
 
 export const validar=passport.authenticate('local',{
     failureRedirect:'/login',
@@ -70,35 +55,57 @@ export const validar=passport.authenticate('local',{
     failureFlash: true
 })
 
+export const LogAdmin=async(req, res) => {
+    const user= await Usuario.findOne({where: {id: req.user.id}})
+    let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
+
+    console.log('session==>',req.session)
+    res.render("admin",{
+        user,
+        rol: roles[user.id_rol-1]
+    })
+}
+
+
+
+
+
+
 export const perfil=async(req, res) =>{
     console.log('req.user.id===>', req.user.id)
     console.log('req.user.id_rol===>', req.user.id_rol)
+
+    // console.log('user==>', user)
     if(!req.user.id){
         res.render('/login')
     }
 
     if(req.user.id_rol==1){
-        console.log('el rol es admin')
-        res.render('admin')
+        console.log('el rol es admin', req.flash('error'))
+        req.flash('success_msg', 'logeado como administrador')
+        res.redirect('/admin')
     };
     if(req.user.id_rol==2){
         console.log('el rol es supervisor')
-        res.render('supervisor')
+        req.flash('success_msg', 'logeado como supervisor')
+        res.redirect('/supervisor')
     };
     if(req.user.id_rol==3){
         console.log('el rol es docente')
-        res.render('docente')
+        req.flash('success_msg', 'logeado como supervisor')
+        res.redirect('/docente')
     };
     if(req.user.id_rol==4){
         console.log('el rol es alumno')
-        res.render('alumno')
+        req.flash('success_msg', 'logeado como supervisor')
+        res.redirect('/alumno')
     };
  
       
 }
 
 export const validarAutenticacion=(req,res, next)=>{
-    console.log('req.user ====>', req.user)
+    // console.log('req.user ====>', req.user)
     console.log('req.isAuthenticated ====>', req.isAuthenticated())
     if(req.isAuthenticated()) return next();
     res.redirect('/login')

@@ -1,75 +1,42 @@
-<h1>soy un administrador<i class="fa-solid fa-check"></i></h1>
+
 
 <div class="container">
     <div class="row">
 <div class="col-4 mx-auto my-3 p-3 border">
     <!--registro de nuevo supervisor--->
-    <h2>Supervisor</h2>
-    <form class="">
-        <div class="mb-3">
-            <input type="text" class="form-control" id="nombre_supervior" name="nombre_supervior" placeholder="Nombre" >
-        </div>
-        <div class="mb-3">
-            <input type="text" class="form-control" id="apellido_supervior" name="apellido_supervior" placeholder="Apellido">
-        </div>
-        <div class="mb-3">
-            <input type="email" class="form-control" id="correo_supervior" name="correo_supervior" placeholder="Correo electrónico" >
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" id="contraseña_supervior" name="contraseña_supervior"  placeholder="Contraseña">
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" id="contraseña2_supervior" name="contraseña2_supervior" placeholder="Confirmar contraseña">
-        </div>        
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary my-2">Registrar</button>
-        </div>
-    </form>
+    <h2 class="my-2">Registrar</h2>
+    <form class="" action="/createsupervisor" method="post">
+<div class="my-3">
+
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="2">
+    <label class="form-check-label" for="inlineRadio1">Supervisor</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="3">
+    <label class="form-check-label" for="inlineRadio2">Docente</label>
+    </div>
+
 </div>
 
-<div class="col-4 mx-auto my-3 p-3 border">
-    <!--registro de nuevo Docente--->
-    <h2>Docente</h2>
-    <form class="">
-        <div class="mb-3">
-            <input type="text" class="form-control" id="nombre_docente" name="nombre_docente" placeholder="Nombre" >
-        </div>
-        <div class="mb-3">
-            <input type="text" class="form-control" id="apellido_docente" name="apellido_docente" placeholder="Apellido">
-        </div>
-        <div class="mb-3">
-            <input type="email" class="form-control" id="correo_docente" name="correo_docente" placeholder="Correo electrónico" >
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" id="contraseña_docente" name="contraseña_docente"  placeholder="Contraseña">
-        </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" id="contraseña2_docente" name="contraseña2_docente" placeholder="Confirmar contraseña">
-        </div>        
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary my-2">Registrar</button>
-        </div>
-    </form>
-</div>
 
-<div class="col-4 mx-auto my-3 p-3 border">
-    <!--registro de nuevo Docente--->
-    <h2>Alumno</h2>
-    <form class="">
+
+
+
         <div class="mb-3">
-            <input type="text" class="form-control" id="nombre_alumno" name="nombre_alumno" placeholder="Nombre" >
+            <input type="text" class="form-control" id="nombre_supervior" name="nombre" placeholder="Nombre" required>
         </div>
         <div class="mb-3">
-            <input type="text" class="form-control" id="apellido_alumno" name="apellido_alumno" placeholder="Apellido">
+            <input type="text" class="form-control" id="apellido_supervior" name="apellido" placeholder="Apellido" required>
         </div>
         <div class="mb-3">
-            <input type="email" class="form-control" id="correo_alumno" name="correo_alumno" placeholder="Correo electrónico" >
+            <input type="email" class="form-control" id="correo_supervior" name="correo" placeholder="Correo electrónico"  required>
         </div>
         <div class="mb-3">
-            <input type="password" class="form-control" id="contraseña_alumno" name="contraseña_alumno"  placeholder="Contraseña">
+            <input type="password" class="form-control" id="contraseña_supervior" name="password"  placeholder="Contraseña" required>
         </div>
         <div class="mb-3">
-            <input type="password" class="form-control" id="contraseña2_alumno" name="contraseña2_alumno" placeholder="Confirmar contraseña">
+            <input type="password" class="form-control" id="contraseña2_supervior" name="password2" placeholder="Confirmar contraseña"  required>
         </div>        
         <div class="mb-3">
             <button type="submit" class="btn btn-primary my-2">Registrar</button>
@@ -80,9 +47,10 @@
 
 
 
+
 </div>
 
 
-<a class="btn btn-primary" href="/logout">Salir</a>
+
 </div>
 
