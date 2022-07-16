@@ -4,7 +4,8 @@ import passport from 'passport'
 import {Usuario} from '../models/usuario.js'
 import {Rol} from '../models/rol.js'
 import { v4 as uuidv4 } from 'uuid';
-
+import moment from 'moment';
+moment.locale('es')
 export const login=(req, res)=>{
  res.render('index')
 }
@@ -20,21 +21,19 @@ res.json(user)
 
 }
 
+//para crear un administraor de sistemas con postman
 export const crearUsuario=async (req, res)=>{
 try {
     const { correo } = req.body;
     req.body.id=uuidv4();
    const user= await Usuario.findOne({ where: { correo: correo } })
  
-
     if(user){
         req.flash("error", "el usuario ya existe")
         return res.json({message: "El usuario ya existe"})
     };
     let id_rol= parseInt(req.body.id_rol);
     const newUser= await Usuario.create(req.body)
-   
-
     req.flash('message', 'Usuario registrado con éxito')
     res.json({message: "usuario registrado con éxito"})
 } catch (error) {
@@ -56,19 +55,21 @@ export const validar=passport.authenticate('local',{
 })
 
 export const LogAdmin=async(req, res) => {
-    const user= await Usuario.findOne({where: {id: req.user.id}})
-    let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
-
-    console.log('session==>',req.session)
-    res.render("admin",{
-        user,
-        rol: roles[user.id_rol-1]
-    })
+    try{
+        const user= await Usuario.findOne({where: {id: req.user.id}})
+        let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
+        let ultimoAcceso= moment(user.updateAt).format('LLL')
+    
+        res.render("admin",{
+            user,
+            rol: roles[user.id_rol-1],
+            ultimoacceso:ultimoAcceso
+        })
+    }catch(e){
+        console.log(e)
+        res.redirect('/login')
+    }
 }
-
-
-
-
 
 
 export const perfil=async(req, res) =>{

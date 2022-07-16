@@ -1,6 +1,7 @@
 import {DataTypes} from 'sequelize'
 import {sequelize} from '../database/conexion.js'
 import {Usuario} from './usuario.js' 
+import {Alumno} from './alumno.js' 
 
 export const Rol=sequelize.define('roles',{
     id: {
@@ -21,6 +22,11 @@ export const Rol=sequelize.define('roles',{
 });
 
 Rol.hasMany(Usuario, {
+    foreignKey: 'id_rol',
+    sourceKey: 'id',
+    onDelete: 'CASCADE'
+});
+Rol.hasMany(Alumno, {
     foreignKey: 'id_rol',
     sourceKey: 'id',
     onDelete: 'CASCADE'

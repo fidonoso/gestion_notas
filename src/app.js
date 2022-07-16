@@ -39,6 +39,21 @@ app.engine(
         inc: function (value, options) {
           return parseInt(value) + 1;
         },   
+        promedio: function (nota1, nota2, nota3, options) {
+          return (Math.floor(nota1+nota2+nota3)/3).toFixed(2);
+        },   
+        resultado: function (nota1, nota2, nota3, options) {
+            if(nota1 && nota2 && nota3){
+              let res=Math.floor(nota1+nota2+nota3)/3
+              if(res>=40){
+                return "Aprobado"
+              }else{
+                return "Reprobado"
+              }
+            }
+
+          return ;
+        },   
     },   
     handlebars: allowInsecurePrototypeAccess(Handlebars)
   })

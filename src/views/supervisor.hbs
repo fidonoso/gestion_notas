@@ -1,4 +1,121 @@
-<h1>Usuario validado</h1>
-<h2>Soy un Supervisor<i class="fa-solid fa-check"></i></h2>
+<div class="container">
+    <div class="row">
+<div class="col-4 my-3 p-1 border">
+    <!--registro de nuevo supervisor--->
+    <h4 class="my-2">Registrar Alumno</h4>
+    <form class="" action="/createalumno" method="post">
+<div class="my-3 p-2 text-center">
 
-<a class="btn btn-primary" href="/logout">Salir</a>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Administración">
+    <label class="form-check-label" for="inlineRadio1">Administración</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Contabilidad">
+    <label class="form-check-label" for="inlineRadio2">Contabilidad</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="Programación" >
+        <label class="form-check-label" for="inlineRadio3">Programación</label>
+    </div>
+
+</div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" id="nombre_supervior" name="nombre" placeholder="Nombre" required>
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" id="apellido_supervior" name="apellido" placeholder="Apellido" required>
+        </div>
+        <div class="mb-3">
+            <input type="email" class="form-control" id="correo_supervior" name="correo" placeholder="Correo electrónico"  required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="contraseña_supervior" name="password"  placeholder="Contraseña" required>
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" id="contraseña2_supervior" name="password2" placeholder="Confirmar contraseña"  required>
+        </div>        
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary my-2">Registrar</button>
+        </div>
+    </form>
+</div>
+<div class="col-6 my-3 p-3 mx-3 border">
+<div class="d-flex justify-content-between">
+<form class="pt-3 ms-2" action="/getalumnos" method="post">
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="checkAdministracion">
+        <input class="form-control d-none" type="text" value="Administracion" id="administracion" name="carrera">
+        <label class="form-check-label" for="checkAdministracion">Cerrar curso</label>
+    </div>
+    <button class="btn btn-{{#if btnADM}}{{btnADM}}{{else}}secondary{{/if}}" type="submit">Administración</button>
+</form>
+<form class="pt-3 ms-3" action="/getalumnos" method="post">
+    <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="" id="checkContabilidad">
+  <input class="form-control d-none" type="text" value="Contabilidad" id="contabilidad" name="carrera">
+  <label class="form-check-label" for="checkContabilidad">Cerrar curso</label>
+</div>
+    <button class="btn btn-{{#if btnCon}}{{btnCon}}{{else}}secondary{{/if}}" type="submit" >Contabilidad</button>
+</form>
+<form class="pt-3 ms-3" action="/getalumnos" method="post">
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="true" id="checkProgramacion">
+        <input class="form-control d-none" type="text" value="Programacion" id="programacion" name="carrera">
+        <label class="form-check-label" for="checkProgramacion">Cerrar curso</label>
+</div>
+    <button class="btn btn-{{#if btnProg}}{{btnProg}}{{else}}secondary{{/if}}"  type="submit">Programación</button>
+</form>
+</div>
+<table class="table">
+  <thead>
+  
+    <tr>
+      <th class="fs-6"></th>
+      <th class="fs-6">Nombre</th>
+      <th class="fs-6">Apellido</th>
+      <th class="fs-6">Nota 1</th>
+      <th class="fs-6">Nota 2</th>
+      <th class="fs-6">Nota 3</th>
+      <th class="fs-6">Promedio</th>
+      <th class="fs-6">Resultado</th>
+    </tr>
+    
+  </thead>
+  <tbody class="table-striped table-hover">
+      {{#each curso}}
+    <tr>
+      <th scope="row">{{inc @index}}</th>
+      <td>{{this.nombre}}</td>
+      <td>{{this.apellido}}</td>
+      <td>{{this.nota1}}</td>
+      <td>{{this.nota2}}</td>
+      <td>{{this.nota3}}</td>
+      <td>{{promedio this.nota1 this.nota2 this.nota3}}</td>
+      <td>{{resultado this.nota1 this.nota2 this.nota3}}</td>
+    </tr>
+    {{else}}
+
+       <tr>
+            <td colspan="8" class="fs-2"> NO hay alumnos registrados en este curso</td>
+        </tr>
+    {{/each}}
+ 
+  </tbody>
+</table>
+
+</div>
+
+
+</div>
+
+</div>
+
+<script>
+    let check1=document.getElementById("checkAdministracion")
+    check1.addEventListener("change", ()=>{
+        alert('hola')
+    })
+</script>
