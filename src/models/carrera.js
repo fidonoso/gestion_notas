@@ -17,6 +17,10 @@ export const Carrera=sequelize.define('carrera',{
         type:DataTypes.STRING,
         allowNull: false,
     },
+    estado_docente:{
+        type:DataTypes.STRING,
+        allowNull: false,
+    },
  
 },{
     timestamps:false

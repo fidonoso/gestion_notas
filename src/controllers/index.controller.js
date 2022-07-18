@@ -83,22 +83,22 @@ export const perfil=async(req, res) =>{
 
     if(req.user.id_rol==1){
         console.log('el rol es admin', req.flash('error'))
-        req.flash('success_msg', 'logeado como administrador')
+        req.flash('success_msg', 'logueado como administrador')
         res.redirect('/admin')
     };
     if(req.user.id_rol==2){
         console.log('el rol es supervisor')
-        req.flash('success_msg', 'logeado como supervisor')
+        req.flash('success_msg', 'logueado como supervisor')
         res.redirect('/supervisor')
     };
     if(req.user.id_rol==3){
         console.log('el rol es docente')
-        req.flash('success_msg', 'logeado como supervisor')
+        req.flash('success_msg', 'logueado como Docente')
         res.redirect('/docente')
     };
     if(req.user.id_rol==4){
         console.log('el rol es alumno')
-        req.flash('success_msg', 'logeado como supervisor')
+        req.flash('success_msg', 'logueado como alumno')
         res.redirect('/alumno')
     };
  

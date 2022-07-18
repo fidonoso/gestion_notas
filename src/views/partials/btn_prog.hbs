@@ -1,0 +1,18 @@
+<!---form Programación----->
+<form class="pt-2 pb-2 ms-3" action="/docente/programacion" method="post" id="form2">
+    <div class="form-check form-switch">
+      {{#if habilitado_prog}}
+        {{#if estp_car_prog}}
+        <input class="form-check-input" type="checkbox" checked value="Programacion" id="check_2" name="checksu">
+        <label class="form-check-label" for="checkProgramacion" id="lbl_2">Curso abierto</label>
+        {{else}}
+        <input class="form-check-input" type="checkbox"  value="Programacion" id="check_2" name="checksu">
+        <label class="form-check-label" for="checkProgramacion" id="lbl_2">Curso cerrado</label>
+        {{/if}}
+      {{else}}
+      <label class="form-check-label" for="checkProgramacion" id="lbl_2">Finalizado por el supervisor</label>
+      {{/if}}
+      <input class="form-control d-none" type="text" value="Programacion" id="programacion" name="carrera">       
+    </div>
+    <button class="btn btn-{{#if btnProg}}{{btnProg}}{{else}}secondary{{/if}}"  type="submit">Programación</button>
+</form>

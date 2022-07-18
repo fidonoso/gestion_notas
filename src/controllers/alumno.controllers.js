@@ -1,11 +1,12 @@
 import {pool} from '../database/conexion.js'
-import { encryptPassword, matchPassword } from "../helpers/encrypterpass.js";
 import passport from 'passport'
 import {Usuario} from '../models/usuario.js'
 import {Alumno} from '../models/alumno.js'
 import {Carrera} from '../models/carrera.js'
 import {Rol} from '../models/rol.js'
 import { v4 as uuidv4 } from 'uuid';
+import moment from 'moment';
+moment.locale('es')
 
 export const createAlumno=async(req, res)=>{ 
 let carrera2;
@@ -66,3 +67,48 @@ res.redirect('/supervisor')
 // res.json({message: "Alumno creado con exito"})
 }
 
+export const updatenote=async (req, res) => {
+
+    const {id, nota1 ,nota2, nota3}=req.body
+ 
+    let alum={
+        nota1: parseInt(nota1),
+        nota2: parseInt(nota2),
+        nota3: parseInt(nota3)
+    }
+try {
+    const newalum=await Alumno.findByPk(id)
+    newalum.nota1=parseInt(nota1)?parseInt(nota1):0;
+    newalum.nota2=parseInt(nota2)?parseInt(nota2):0;
+    newalum.nota3=parseInt(nota3)?parseInt(nota3):0;
+    let nu=await newalum.save()
+    console.log(nu)
+    
+    res.json({message: 'guardado con éxito'})
+} catch (error) {
+    console.log(e)
+}
+
+}
+
+export const getAlumno=async (req, res) => {
+    
+    let carr=await Carrera.findAll()
+    let alumno=await Alumno.findByPk(req.session.passport.user)
+    let carrera=carr.find(c=>c.id==alumno.id_carrera)
+    let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
+    let ultimoAcceso= moment(alumno.updateAt).format('LLL')
+   res.render('alumno',{
+    nombre: alumno.nombre,
+    apellido: alumno.apellido,
+    correo: alumno.correo,
+    nota1: alumno.nota1, 
+    nota2: alumno.nota2,
+    nota3: alumno.nota3,
+    carrera: carrera.nombre,
+    rol: roles[alumno.id_rol-1],
+    ultimoacceso:ultimoAcceso,
+    estado_curso: parseInt(carrera.estado_docente)?"Curso abierto":"Curso cerrado"
+
+   })
+}

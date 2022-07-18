@@ -1,4 +1,38 @@
-<h1>Usuario validado</h1>
-<h2>Soy un alumno</h2>
-
-<a class="btn btn-primary" href="/logout">Salir</a>
+<div class="container text-center">
+    <div class="row">
+        <div class="col-8 my-3 p-3 mx-auto border">
+            <div class="fs-2 pb-4" id="caja_accion">
+                {{carrera}} - {{estado_curso}}
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+           
+                    <th class="fs-6">Nombre</th>
+                    <th class="fs-6">Apellido</th>
+                    <th class="fs-6">Nota 1</th>
+                    <th class="fs-6">Nota 2</th>
+                    <th class="fs-6">Nota 3</th>
+                    <th class="fs-6">Promedio</th>
+                    <th class="fs-6">Resultado</th>
+                    </tr> 
+                    
+                </thead>
+                <tbody class="table-striped table-hover" id="datos">
+                    
+                    <tr>
+                    <td class="" style="width: 110px;">{{nombre}}</td>
+                    <td class="" style="width: 110px;">{{apellido}}</td>
+                    <td class={{colorsolo nota1}}> {{nota1}}</td>
+                    <td class={{colorsolo nota2}}> {{nota2}}</td>
+                    <td class={{colorsolo nota3}}> {{nota3}}</td>
+                    <td class={{color nota1 nota2 nota3}}>{{promedio nota1 nota2 nota3}}</td>
+                    <td class={{color nota1 nota2 nota3}}>{{resultado nota1 nota2 nota3}}</td>
+                    
+                    </tr>
+                </tbody>
+            </table>
+            <a class="btn btn-primary my-3" type="button" href="/logout">Salir</a>
+        </div>
+    </div>
+</div>

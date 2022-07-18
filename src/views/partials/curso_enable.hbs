@@ -1,0 +1,108 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="fs-6"></th>
+      <th class="fs-6">Nombre</th>
+      <th class="fs-6">Apellido</th>
+      <th class="fs-6">Nota 1</th>
+      <th class="fs-6">Nota 2</th>
+      <th class="fs-6">Nota 3</th>
+      <th class="fs-6">Promedio</th>
+      <th class="fs-6">Resultado</th>
+      {{#if administracion}}
+        {{#if estp_car_admin}}
+          <th class="fs-6 guardador">Guardar</th>
+          <th class="fs-6 ">Modificar</th>
+        {{/if}}
+      {{/if}}
+
+      {{#if programacion}}
+        {{#if estp_car_prog}}
+          <th class="fs-6 guardador">Guardar</th>
+          <th class="fs-6 ">Modificar</th>
+        {{/if}}
+      {{/if}}
+
+      {{#if contabilidad}}
+        {{#if estp_car_cont}}
+          <th class="fs-6 guardador">Guardar</th>
+          <th class="fs-6 ">Modificar</th>
+        {{/if}}
+      {{/if}}
+
+    </tr> 
+    
+  </thead>
+  <tbody class="table-striped table-hover" id="datos">
+  {{#if administracion}}
+      {{#each curso}}
+        <tr>
+          <th scope="row">{{inc @index}}</th>
+          <td class="" style="width: 110px;">{{this.nombre}}</td>
+          <td class="" style="width: 110px;">{{this.apellido}}</td>
+          <td> <input type="text" value="{{this.nota1}}" id="{{this.id}}_1"  disabled class="w-50 {{colorsolo nota1}} text-center"></td>
+          <td> <input type="text" value="{{this.nota2}}" id="{{this.id}}_2"  disabled  class="w-50 {{colorsolo nota2}} text-center"></td>
+          <td> <input type="text" value="{{this.nota3}}" id="{{this.id}}_3"  disabled class="w-50 {{colorsolo nota3}} text-center">{{estp_car_admin}}</td>
+          <td class={{color nota1 nota2 nota3}}>{{promedio this.nota1 this.nota2 this.nota3}}</td>
+          <td class={{color nota1 nota2 nota3}}>{{resultado this.nota1 this.nota2 this.nota3}} </td>
+          {{#if this.estp }}
+          <td class="text-center guardador" style="cursor: pointer;" onclick="guardado('{{this.id}}')"><i class="fa-solid fa-floppy-disk" ></i></td>
+          <td class="text-center " style="cursor: pointer;"  onclick="modificar('{{this.id}}');"><i class="fa-solid fa-pen-to-square"></i></td>     
+          {{/if}}
+        </tr>
+      {{else}}
+       <tr>
+          <td colspan="8" class="fs-2"> No hay alumnos registrados en administración</td>
+        </tr>
+      {{/each}}
+  {{/if}} 
+
+ {{#if programacion}}
+    {{#each curso}}
+        <tr>
+          <th scope="row">{{inc @index}}</th>
+          <td class="" style="width: 110px;">{{this.nombre}}</td>
+          <td class="" style="width: 110px;">{{this.apellido}}</td>
+          <td> <input type="text" value="{{this.nota1}}" id="{{this.id}}_1"  disabled class="w-50"></td>
+          <td> <input type="text" value="{{this.nota2}}" id="{{this.id}}_2"  disabled  class="w-50"></td>
+          <td> <input type="text" value="{{this.nota3}}" id="{{this.id}}_3"  disabled class="w-50"></td>
+          <td>{{promedio this.nota1 this.nota2 this.nota3}}</td>
+          <td>{{resultado this.nota1 this.nota2 this.nota3}}</td>
+          {{#if this.estp}}
+          <td class="text-center guardador" style="cursor: pointer;" onclick="guardado('{{this.id}}')"><i class="fa-solid fa-floppy-disk" ></i></td>
+          <td class="text-center " style="cursor: pointer;"  onclick="modificar('{{this.id}}');"><i class="fa-solid fa-pen-to-square"></i></td>     
+          {{/if}}
+        </tr>
+    {{else}}
+        <tr>
+          <td colspan="8" class="fs-2"> No hay alumnos registrados en programación</td>
+        </tr>
+    {{/each}}
+  {{/if}}
+
+ {{#if contabilidad}}
+    {{#each curso}}
+        <tr>
+          <th scope="row">{{inc @index}}</th>
+          <td class="" style="width: 110px;">{{this.nombre}}</td>
+          <td class="" style="width: 110px;">{{this.apellido}}</td>
+          <td > <input  type="text" value="{{this.nota1}}" id="{{this.id}}_1"  disabled class="w-50 {{colorsolo nota1}} text-center"></td>
+          <td> <input type="text" value="{{this.nota2}}" id="{{this.id}}_2"  disabled  class="w-50 {{colorsolo nota2}} text-center"></td>
+          <td > <input  type="text" value="{{this.nota3}}" id="{{this.id}}_3"  disabled class="w-50 {{colorsolo nota3}} text-center"></td>
+          <td class={{color nota1 nota2 nota3}}>{{promedio this.nota1 this.nota2 this.nota3}}</td>
+          <td class={{color nota1 nota2 nota3}}>{{resultado this.nota1 this.nota2 this.nota3}}</td>
+          {{#if this.estp}}
+          <td class="text-center guardador" style="cursor: pointer;" onclick="guardado('{{this.id}}')"><i class="fa-solid fa-floppy-disk" ></i></td>
+          <td class="text-center " style="cursor: pointer;"  onclick="modificar('{{this.id}}');"><i class="fa-solid fa-pen-to-square"></i></td>     
+          {{/if}}
+        </tr>
+    {{else}}
+        <tr>
+          <td colspan="8" class="fs-2"> No hay alumnos registrados contablidad</td>
+        </tr>
+    {{/each}}
+  {{/if}}
+    
+ 
+  </tbody>
+</table>

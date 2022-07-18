@@ -40,7 +40,12 @@ app.engine(
           return parseInt(value) + 1;
         },   
         promedio: function (nota1, nota2, nota3, options) {
-          return (Math.floor(nota1+nota2+nota3)/3).toFixed(2);
+          if(nota1 && nota2 && nota3 ){
+            return (Math.floor(nota1+nota2+nota3)/3).toFixed(2);
+
+          }
+          return
+          
         },   
         resultado: function (nota1, nota2, nota3, options) {
             if(nota1 && nota2 && nota3){
@@ -53,7 +58,24 @@ app.engine(
             }
 
           return ;
-        },   
+        },
+        color: function(nota1, nota2, nota3){
+          if(nota1 && nota2 && nota3){
+            let res=Math.floor(nota1+nota2+nota3)/3
+            if(res>=40){
+              return "text-primary"
+            }else{
+              return "text-danger"
+            }
+          }
+        },
+        colorsolo:function(nota){
+          if(nota>=40){
+            return "text-primary"
+          }else{
+            return "text-danger"
+          }
+        }
     },   
     handlebars: allowInsecurePrototypeAccess(Handlebars)
   })

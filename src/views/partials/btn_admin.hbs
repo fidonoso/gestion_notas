@@ -1,0 +1,18 @@
+  <!---form ADministración----->
+<form class="pt-2 pb-2 ms-2" action="/docente/administracion" method="post" id="form1">
+    <div class="form-check form-switch">
+      {{#if habilitado_admin}}
+        {{#if estp_car_admin}}
+        <input class="form-check-input" type="checkbox" checked value="Administracion" name="checksu" id="check_1">
+        <label class="form-check-label" for="checkAdministracion" id="lbl_1">Curso abierto</label>
+        {{else}}
+          <input class="form-check-input" type="checkbox" value="Administracion" name="checksu" id="check_1">
+        <label class="form-check-label" for="checkAdministracion" id="lbl_1">Curso cerrado</label>
+        {{/if}}
+      {{else}}      
+      <label class="form-check-label" for="checkAdministracion" id="lbl_1">Finalizado por el supervisor</label>
+      {{/if}}
+      <input class="form-control d-none" type="text" value="Administracion" id="administracion" name="carrera">    
+    </div>
+    <button class="btn btn-{{#if btnADM}}{{btnADM}}{{else}}secondary{{/if}}" type="submit">Administración</button>
+</form>
