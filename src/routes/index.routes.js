@@ -1,7 +1,7 @@
 import {Router} from 'express'
 const router=Router();
 import {validarAutenticacion} from '../controllers/index.controller.js'
-import { login, crearUsuario,crearUsuario2, validar, perfil, userlogout, consultarusuario, LogAdmin} from '../controllers/index.controller.js'
+import { login, crearUsuario,crearUsuario2, validar, perfil, userlogout, consultarusuario, LogAdmin, forbidden} from '../controllers/index.controller.js'
 
 router.get('/',validarAutenticacion, perfil);
 router.get('/login', login);
@@ -13,5 +13,6 @@ router.get('/admin', validarAutenticacion, LogAdmin)
 router.post('/consultarusuario', consultarusuario)
 
 router.get('/logout', userlogout)
+router.get('/forbidden', forbidden)
 
 export default router

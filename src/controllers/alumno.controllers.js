@@ -1,6 +1,4 @@
-import {pool} from '../database/conexion.js'
-import passport from 'passport'
-import {Usuario} from '../models/usuario.js'
+
 import {Alumno} from '../models/alumno.js'
 import {Carrera} from '../models/carrera.js'
 import {Rol} from '../models/rol.js'
@@ -11,7 +9,6 @@ moment.locale('es')
 export const createAlumno=async(req, res)=>{ 
 let carrera2;
 let errors=[];
-console.log('req.body===>', req.body)
 const {nombre, apellido, correo, password, password2, inlineRadioOptions: carrera}= req.body;
 
 if(carrera=="Administración"){
@@ -50,15 +47,13 @@ res.redirect('/supervisor')
         id_rol: 4,
         id_carrera: carrera2
     }
-    console.log(alum)
+   
     try{
-        console.log('llegue al try')
         const newuser=await Alumno.create(alum)
         req.flash("success_msg", `Alumno ${nombre} - ${apellido} creado con éxito`);
          res.redirect('/supervisor')
 
     }catch(e){
-        console.log('no llegue al try', e)
         req.flash('error_msg', 'Algo salió mal')
         res.redirect('/supervisor')
     }
@@ -82,33 +77,40 @@ try {
     newalum.nota2=parseInt(nota2)?parseInt(nota2):0;
     newalum.nota3=parseInt(nota3)?parseInt(nota3):0;
     let nu=await newalum.save()
-    console.log(nu)
     
     res.json({message: 'guardado con éxito'})
 } catch (error) {
-    console.log(e)
+    // console.log(e)
 }
 
 }
 
 export const getAlumno=async (req, res) => {
-    
-    let carr=await Carrera.findAll()
-    let alumno=await Alumno.findByPk(req.session.passport.user)
-    let carrera=carr.find(c=>c.id==alumno.id_carrera)
-    let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
-    let ultimoAcceso= moment(alumno.updateAt).format('LLL')
-   res.render('alumno',{
-    nombre: alumno.nombre,
-    apellido: alumno.apellido,
-    correo: alumno.correo,
-    nota1: alumno.nota1, 
-    nota2: alumno.nota2,
-    nota3: alumno.nota3,
-    carrera: carrera.nombre,
-    rol: roles[alumno.id_rol-1],
-    ultimoacceso:ultimoAcceso,
-    estado_curso: parseInt(carrera.estado_docente)?"Curso abierto":"Curso cerrado"
-
-   })
+    if( req.user.id_rol==4){
+        try {
+            let carr=await Carrera.findAll()
+            let alumno=await Alumno.findByPk(req.session.passport.user)
+            let carrera=carr.find(c=>c.id==alumno.id_carrera)
+            let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
+            let ultimoAcceso= moment(alumno.updateAt).format('LLL')
+           res.render('alumno',{
+            nombre: alumno.nombre,
+            apellido: alumno.apellido,
+            correo: alumno.correo,
+            nota1: alumno.nota1, 
+            nota2: alumno.nota2,
+            nota3: alumno.nota3,
+            carrera: carrera.nombre,
+            rol: roles[alumno.id_rol-1],
+            ultimoacceso:ultimoAcceso,
+            estado_curso: parseInt(carrera.estado_docente)?"Curso abierto":"Curso cerrado"
+           })
+        } catch (error) {
+            res.status(500).json({message: error.message}) 
+        }
+  
+}else{
+    req.flash('error', "No estas autorizado. Las cuentas de los alumnos son personales")
+    res.redirect('/forbidden')
+}
 }

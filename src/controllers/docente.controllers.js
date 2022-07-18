@@ -10,10 +10,10 @@ import moment from 'moment';
 moment.locale('es')
 
 export const crearteDocente=async(req, res)=>{ 
-console.log('req.body', req.body)
+
 
 let errors=[];
-console.log('req.body', req.body)
+
 const {nombre, apellido, correo, password, password2}= req.body;
 if (password != password2) {
 errors.push({ text: "Las contraseñas no coinciden" });
@@ -40,13 +40,11 @@ res.redirect('/admin')
         id_rol: 3
     }
     try{
-        console.log('llegue al try')
         const newuser=await Usuario.create(sup)
         req.flash("success_msg", `Supervisor ${nombre} - ${apellido} creado con éxito`);
          res.redirect('/admin')
 
     }catch(e){
-        console.log('no llegue al try', e)
         req.flash('error_msg', 'Algo salió mal')
         res.redirect('/admin')
     }
@@ -56,7 +54,9 @@ res.json({message: "Docente creado con exito"})
 }
 
 export const getProfe=async (req, res) => {
-   
+    
+    if(req.user.id_rol==3){
+
     try {
         let estados_curso= await Carrera.findAll()
         // parseInt(estados_curso[0].estado)
@@ -65,10 +65,6 @@ export const getProfe=async (req, res) => {
         let user=await Usuario.findByPk(req.session.passport.user)
         let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
         let ultimoAcceso= moment(user.updateAt).format('LLL')
-    console.log('habilitado_admin=>', !!parseInt(estados_curso[0].estado))
-    console.log('habilitado_prog=>', !!parseInt(estados_curso[1].estado))
-    console.log('habilitado_cont=>', !!parseInt(estados_curso[2].estado))
-
         res.render('docente',{
             curso: curso,
             user,
@@ -83,7 +79,10 @@ export const getProfe=async (req, res) => {
         })
     } catch (error) {
         return res.status(500).json({ message: error.message });
-    }      
+    }}else{
+        req.flash('error', 'No estas autorizado')
+        res.redirect('/forbidden')
+    }     
 };
 
 export const getCarrerasadministracion=async(req, res)=>{
@@ -236,11 +235,11 @@ export const getAlumnos=async (req, res) => {
     let btnProg= "secondary"
     try {
         let estados_curso= await Carrera.findAll()
-        console.log('estados==>', estados_curso)
+
         let checkADM=estados_curso.find(x=>x.id=1).estado==1?"checked":"";
         let checkCon=estados_curso.find(x=>x.id=2).estado==1?"checked":"";
         let checkProg=estados_curso.find(x=>x.id=3).estado==1?"checked":"";
-        console.log('checkADM',checkADM)
+
     
         if(req.body.carrera=="Administracion"){
             carrera=1

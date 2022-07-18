@@ -55,6 +55,7 @@ export const validar=passport.authenticate('local',{
 })
 
 export const LogAdmin=async(req, res) => {
+    if(req.user.id_rol==1){
     try{
         const user= await Usuario.findOne({where: {id: req.user.id}})
         let roles=["Administrador de sistemas", "Supervisor", "Docente", "Alumno"]
@@ -69,14 +70,22 @@ export const LogAdmin=async(req, res) => {
         console.log(e)
         res.redirect('/login')
     }
+    }else{
+        req.flash('error', 'No estas autorizado. Contacta con el administador de sistemas')
+        res.redirect('/forbidden')
+    }
+};
+export const forbidden=(req, res) => {
+    
+    res.render('contacto')
 }
 
 
 export const perfil=async(req, res) =>{
-    console.log('req.user.id===>', req.user.id)
-    console.log('req.user.id_rol===>', req.user.id_rol)
+    // console.log('req.user.id===>', req.user.id)
+    // console.log('req.user.id_rol===>', req.user.id_rol)
 
-    // console.log('user==>', user)
+ 
     if(!req.user.id){
         res.render('/login')
     }
